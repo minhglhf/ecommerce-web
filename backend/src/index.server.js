@@ -6,11 +6,14 @@ const app = express();
 
 env.config();
 
+const userRoutes = require('./routes/user')
+
 mongoose.connect(
-    `mongodb+srv://${process.env.MONGGO_DB_USERNAME}:${process.env.MONGGO_DB_PASSWORD}@nodetuts.7eeft.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.MONGGO_DB_USERNAME}:${process.env.MONGGO_DB_PASSWORD}@nodetuts.7eeft.mongodb.net/${process.env.MONGGO_DB_DATABASE}?retryWrites=true&w=majority`,
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true,
     }).then(() => {
         console.log("database connect")
     }).catch(() => {
@@ -20,17 +23,8 @@ mongoose.connect(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: "hello from server"
-    })
-})
+app.use('/api', userRoutes);
 
-app.post('/data', (req, res, next) => {
-    res.status(200).json({
-        message: req.body
-    })
-})
 
 app.listen(process.env.PORT, () => {
     console.log(`server is running on port ${process.env.PORT}`)
