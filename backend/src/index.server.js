@@ -6,8 +6,8 @@ const app = express();
 
 env.config();
 
-const userRoutes = require('./routes/user')
-
+const authRoutes = require('./routes/auth')
+const authAdminRoutes = require('./routes/admin/auth')
 mongoose.connect(
     `mongodb+srv://${process.env.MONGGO_DB_USERNAME}:${process.env.MONGGO_DB_PASSWORD}@nodetuts.7eeft.mongodb.net/${process.env.MONGGO_DB_DATABASE}?retryWrites=true&w=majority`,
     {
@@ -23,8 +23,8 @@ mongoose.connect(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api', userRoutes);
-
+app.use('/api', authRoutes);
+app.use('/api', authAdminRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`server is running on port ${process.env.PORT}`)
