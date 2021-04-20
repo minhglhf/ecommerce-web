@@ -73,7 +73,7 @@ exports.signin = (req, res) => {
                     res.status(200).json({
                         token,
                         user: {
-                            firstName, lastName, email, role, fullName
+                            _id, firstName, lastName, email, role, fullName
                         }
                     })
                 }
