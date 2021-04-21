@@ -17,7 +17,7 @@ exports.addItemToCart = (req, res) => {
                     
                     Cart.findOneAndUpdate({ user: req.user._id, "cartItems.product": req.body.cartItems.product }, {
                         "$set": {
-                            "cartItems": {
+                            "cartItems.$": {
                                 ...req.body.cartItems,
                                 quantity: productExist.quantity + req.body.cartItems.quantity
                             }

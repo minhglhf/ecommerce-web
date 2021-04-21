@@ -24,6 +24,11 @@ mongoose.connect(
         console.log("error connect")
     });
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
