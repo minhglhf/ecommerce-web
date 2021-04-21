@@ -3,7 +3,7 @@ const env = require('dotenv');
 
 const mongoose = require('mongoose');
 const app = express();
-
+const path = require('path')
 env.config();
 
 const authRoutes = require('./routes/auth')
@@ -31,6 +31,7 @@ mongoose.set('useUnifiedTopology', true);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use('/public/', express.static(path.join(__dirname, 'uploads')))
 
 app.use('/api', authRoutes);
 app.use('/api', authAdminRoutes);

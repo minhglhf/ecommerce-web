@@ -5,11 +5,13 @@ exports.createCategory = (req, res) => {
     let categoryObj = {
         name: req.body.name,
         slug: slugify(req.body.name),
+        categoryImage: `${process.env.API}/public/${req.file.filename}`
     }
 
     if (req.body.parentId) {
         categoryObj = { ...categoryObj, parentId: req.body.parentId };
     }
+
 
     const _category = new Category(categoryObj);
 

@@ -3,6 +3,7 @@
 logs
 *.log
 npm-debug.log*
+.env
  
 # Runtime data
 pids
@@ -34,6 +35,6 @@ uploads
  
 # Optional npm cache directory
 .npm
- 
+
 # Optional REPL history
 .node_repl_history
