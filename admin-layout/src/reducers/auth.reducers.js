@@ -1,7 +1,10 @@
 import { authConsts } from "../actions/const"
 
 const initState = {
-    name: 'fuck'
+    token: null,
+    user: null,
+    authenticate: false,
+    pending: false,
 }
 
 const authReducer = (state = initState, action) => {
@@ -10,7 +13,25 @@ const authReducer = (state = initState, action) => {
         case authConsts.LOGIN_REQUEST: {
             state = {
                 ...state,
-                ...action.payload
+                pending: true
+            }
+            break;
+        }
+        case authConsts.LOGIN_SUCCESS: {
+            state = {
+                ...state,
+                user: action.payload.user,
+                token: action.payload.token,
+                pending: false,
+                authenticate: true
+            }
+            break;
+        }
+        case authConsts.LOGIN_FAILURE: {
+            state = {
+                ...state,
+                pending: true,
+                authenticate: false
             }
             break;
         }

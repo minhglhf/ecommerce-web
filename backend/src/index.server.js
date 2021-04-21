@@ -4,6 +4,8 @@ const env = require('dotenv');
 const mongoose = require('mongoose');
 const app = express();
 const path = require('path')
+const cors = require('cors')
+
 env.config();
 
 const authRoutes = require('./routes/auth')
@@ -29,10 +31,10 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/public/', express.static(path.join(__dirname, 'uploads')))
-
 app.use('/api', authRoutes);
 app.use('/api', authAdminRoutes);
 app.use('/api', categoryRoutes);
