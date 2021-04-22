@@ -64,9 +64,9 @@ exports.signin = (req, res) => {
                         role,
                         fullName
                     }
-                    
-                    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '2 days' })
 
+                    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '2 days' })
+                    res.cookie('token', token, { expiresIn: "2 days" })
                     res.status(200).json({
                         token,
                         user: {
@@ -82,4 +82,11 @@ exports.signin = (req, res) => {
                 message: "invalid email"
             })
         })
+}
+
+exports.signout = (req, res) => {
+    res.clearCookie('token');
+    res.status(200).json({
+        message: "signout successfully..."
+    })
 }
