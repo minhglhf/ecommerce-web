@@ -1,33 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from '../../components/layout'
 
 import { Form, Button, Row, Col, Container } from 'react-bootstrap'
+import { login } from '../../actions'
+import { useDispatch, useSelector } from 'react-redux'
+import Input from '../../components/UI/input'
+import { Redirect } from 'react-router'
 
 const Signin = (props) => {
+
+    const [user, setUser] = useState({ email: "", password: "" });
+    // const [err, setErr] = useState('');
+    const auth = useSelector(state => state.auth)
+
+    const dispatch = useDispatch();
+
+
+    const userLogin = (e) => {
+
+        e.preventDefault();
+
+        dispatch(login(user))
+    }
+
+    if (auth.authenticate) {
+        return <Redirect to={'/'} />
+    }
+
+
+
     return (
         <Layout>
-            <Container style={{maxWidth: '50%'}}>
+            <Container style={{ maxWidth: '50%' }}>
                 <Row>
                     <Col md={12}>
-                        <Form>
-                            <Form.Group controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
-                                <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                    </Form.Text>
-                            </Form.Group>
+                        <Form onSubmit={userLogin}>
+                            <Input
+                                name="Email"
+                                type="email"
+                                value={user.email}
+                                placeholder="email"
+                                onChange={(e) => { setUser({ email: e.target.value, password: user.password }) }}
+                            />
 
-                            <Form.Group controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" />
-                            </Form.Group>
-                            <Form.Group controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Check me out" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Submit
-                    </Button>
+                            <Input
+                                name="Password"
+                                type="password"
+                                value={user.password}
+                                placeholder="password"
+                                onChange={(e) => { setUser({ email: user.email, password: e.target.value }) }}
+                            />
+
+                            <Button variant="primary" type="submit" >
+                                Signin
+                            </Button>
                         </Form>
                     </Col>
                 </Row>
