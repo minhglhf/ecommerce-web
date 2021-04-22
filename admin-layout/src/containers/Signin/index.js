@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Layout from '../../components/layout'
 
 import { Form, Button, Row, Col, Container } from 'react-bootstrap'
@@ -6,19 +6,15 @@ import { login } from '../../actions'
 import { useDispatch, useSelector } from 'react-redux'
 import Input from '../../components/UI/input'
 import { Redirect } from 'react-router'
-import { isLoggedIn } from '../../actions/auth.actions'
 
 const Signin = (props) => {
 
     const [user, setUser] = useState({ email: "", password: "" });
-    const [err, setErr] = useState('');
+    // const [err, setErr] = useState('');
     const auth = useSelector(state => state.auth)
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        if (!auth.authenticate) dispatch(isLoggedIn())
-    }, [])
 
     const userLogin = (e) => {
 

@@ -37,6 +37,19 @@ export const login = (user) => {
     }
 }
 
+
+
+
+export const signout = () => {
+
+    return async (dispatch) => {
+        localStorage.clear();
+        dispatch({
+            type: authConsts.LOGOUT_REQUEST
+        });
+    }
+}
+
 export const isLoggedIn = () => {
     return async dispatch => {
         const token = localStorage.getItem('token');
