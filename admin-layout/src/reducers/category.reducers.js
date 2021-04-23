@@ -34,6 +34,32 @@ const categoryReducer = (state = initState, action) => {
             }
             break;
         }
+        case categoryConsts.ADD_CATEGORY_REQUEST: {
+            state = {
+                ...state,
+                pending: true
+            }
+            break;
+        }
+        case categoryConsts.ADD_CATEGORY_SUCCESS: {
+            state = {
+                ...state,
+                categoryList: {
+                    ...state.categoryList,
+                    ...action.payload.newCategory
+                },
+                pending: false,
+            }
+            break;
+        }
+        case categoryConsts.FETCH_FAILURE: {
+            state = {
+                ...state,
+                pending: false,
+                message: action.payload.error,
+            }
+            break;
+        }
 
         default: {
             break;
