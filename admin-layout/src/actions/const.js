@@ -13,3 +13,9 @@ export const userConsts = {
     REGISTER_FAILURE: "REGISTER_FAILURE",
     REGISTER_SUCCESS: "REGISTER_SUCCESS",
 }
+
+export const categoryConsts = {
+    FETCH_REQUEST: "FETCH_REQUEST",
+    FETCH_FAILURE: "FETCH_FAILURE",
+    FETCH_SUCCESS: "FETCH_SUCCESS",
+}

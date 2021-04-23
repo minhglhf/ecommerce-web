@@ -16,6 +16,7 @@ const Layout = (props) => {
                                     <li><NavLink to="/">Home</NavLink></li>
                                     <li><NavLink to="/products">Products</NavLink></li>
                                     <li><NavLink to="/orders">Order</NavLink></li>
+                                    <li><NavLink to="/categories">Categories</NavLink></li>
                                 </ul>
                             </Col>
                             <Col md={10} className="sidecontainer">
