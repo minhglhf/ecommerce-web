@@ -28,16 +28,17 @@ export const fetchCategories = () => {
 }
 
 export const addCategory = (form) => {
+
     return async (dispatch) => {
         const res = await axios.post('/category/create',
             form
         )
-        
+
         dispatch({
             type: categoryConsts.ADD_CATEGORY_REQUEST
         })
 
-        if(res.status === 201){
+        if (res.status === 201) {
             dispatch({
                 type: categoryConsts.ADD_CATEGORY_SUCCESS,
                 payload: {
@@ -46,7 +47,7 @@ export const addCategory = (form) => {
             })
         }
 
-        else if(res.status === 400) {
+        else if (res.status === 400) {
             dispatch({
                 type: categoryConsts.ADD_CATEGORY_FAILURE,
                 payload: {

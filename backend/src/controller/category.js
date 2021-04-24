@@ -64,6 +64,7 @@ const createCategoriesList = (categories, parentId = null) => {
             _id: cate._id,
             name: cate.name,
             slug: cate.slug,
+            parentId: cate.parentId,
             children: createCategoriesList(categories, cate._id)
         });
     }

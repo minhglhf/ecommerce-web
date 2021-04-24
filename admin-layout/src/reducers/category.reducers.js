@@ -7,7 +7,38 @@ const initState = {
     message: ''
 }
 
+const makeNewCategories = (category, oldCategories) => {
+
+    let newCategories = oldCategories;
+
+    const obj = {
+        _id: category._id,
+        name: category.name,
+        slug: category.slug,
+        children: []
+    }
+
+    if (category.parentId === undefined) {
+        newCategories.push(obj)
+    }
+    else {
+        for (let cate of newCategories) {
+            if (category.parentId === cate._id) {
+                cate.children.push({
+                    ...obj,
+                    parentId: category.parentId
+                })
+            }
+            else makeNewCategories(category, cate.children)
+
+        }
+    }
+
+    return newCategories;
+}
+
 const categoryReducer = (state = initState, action) => {
+    console.log(state.categoryList)
     switch (action.type) {
         case categoryConsts.FETCH_REQUEST: {
             state = {
@@ -42,17 +73,15 @@ const categoryReducer = (state = initState, action) => {
             break;
         }
         case categoryConsts.ADD_CATEGORY_SUCCESS: {
+            const newCategories = makeNewCategories(action.payload.newCategory, state.categoryList)
+            console.log(newCategories)
             state = {
                 ...state,
-                categoryList: {
-                    ...state.categoryList,
-                    ...action.payload.newCategory
-                },
                 pending: false,
             }
             break;
         }
-        case categoryConsts.FETCH_FAILURE: {
+        case categoryConsts.ADD_CATEGORY_FAILURE: {
             state = {
                 ...state,
                 pending: false,
