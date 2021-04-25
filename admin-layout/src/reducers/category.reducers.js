@@ -38,7 +38,7 @@ const makeNewCategories = (category, oldCategories) => {
 }
 
 const categoryReducer = (state = initState, action) => {
-    console.log(state.categoryList)
+    // console.log(state.categoryList)
     switch (action.type) {
         case categoryConsts.FETCH_REQUEST: {
             state = {
@@ -74,7 +74,7 @@ const categoryReducer = (state = initState, action) => {
         }
         case categoryConsts.ADD_CATEGORY_SUCCESS: {
             const newCategories = makeNewCategories(action.payload.newCategory, state.categoryList)
-            console.log(newCategories)
+            // console.log(newCategories)
             state = {
                 ...state,
                 pending: false,
