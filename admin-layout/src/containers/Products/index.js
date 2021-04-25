@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Layout from '../../components/layout';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import Input from '../../components/UI/input';

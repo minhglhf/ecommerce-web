@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import Products from './containers/Products';
 import Orders from './containers/Orders';
 import Categories from './containers/Categories';
+
+import {  fetchCategories } from './actions/category.actions';
 const App = () => {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth)
@@ -17,6 +19,9 @@ const App = () => {
   useEffect(() => {
 
     if (!auth.authenticate) dispatch(isLoggedIn())
+
+    dispatch(fetchCategories());
+
   }, [])
   return (
 
