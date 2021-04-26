@@ -4,6 +4,7 @@ import { Container, Row, Col, Button, Modal, Table } from 'react-bootstrap';
 import Input from '../../components/UI/input';
 import { useDispatch, useSelector } from 'react-redux'
 import { addProduct, fetchProducts } from '../../actions';
+import { generateImageUrl } from '../../config';
 const Products = (props) => {
     const [productInput, setProductInput] = useState({
         name: '',
@@ -34,10 +35,19 @@ const Products = (props) => {
 
     }, [])
     const [show, setShow] = useState(false);
+    const [showDetail, setShowDetail] = useState(false);
+    const [productDetail, setProductDetail] = useState(null)
+    const showProductDetailModal = (product) => {
+        setProductDetail(product)
+        setShowDetail(true);
+        console.log(product)
+    }
+
     const categoryList = useSelector(state => state.category)
     const productList = useSelector(state => state.product)
     const handleCloseCancel = () => {
         setShow(false);
+        setShowDetail(false)
     };
     const handleCloseSave = () => {
         const form = new FormData();
@@ -73,7 +83,9 @@ const Products = (props) => {
                     <tbody>
                         {productList.products != null ? productList.products.map((product, index) => {
                             return (
-                                <tr key={index}>
+                                <tr key={index} onClick={() => {
+                                    showProductDetailModal(product)
+                                }}>
                                     <td>{index + 1}</td>
                                     <td>{product.name}</td>
                                     <td>{product.price}</td>
@@ -89,6 +101,67 @@ const Products = (props) => {
             </div>
         )
 
+    }
+
+    const renderProductDetailModal = () => {
+        return (
+            <Modal show={showDetail} onHide={handleCloseCancel} size="lg">
+                <Modal.Header closeButton>
+                    <Modal.Title>product detail</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+                        {/* <Col md={6}> */}
+                        <div style={{ width: '30%' }}><h6>Name : </h6></div>
+                        <div style={{ width: '70%' }}>
+                            <p>{productDetail != null ? productDetail.name : null}</p>
+                        </div>
+
+                        {/* </Col> */}
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+                        <div style={{ width: '30%' }}><h6>Price : </h6></div>
+                        <div style={{ width: '70%' }}>
+                            <p>{productDetail != null ? productDetail.price : null}</p>
+                        </div>
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+                        <div style={{ width: '30%' }}><h6>Quantity : </h6></div>
+                        <div style={{ width: '70%' }}>
+                            <p>{productDetail != null ? productDetail.quantity : null}</p>
+                        </div>
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+                        <div style={{ width: '30%' }}><h6>Description : </h6></div>
+                        <div style={{ width: '70%' }}>
+                            <p>{productDetail != null ? productDetail.description : null}</p>
+                        </div>
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+                        <div style={{ width: '30%' }}><h6>Category : </h6></div>
+                        <div style={{ width: '70%' }}>
+                            <p>{productDetail != null ? productDetail.category.name : null}</p>
+                        </div>
+                    </div>
+                    <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-start' }}>
+                        <div style={{ width: '30%' }}><h6>Image : </h6></div>
+                        <div style={{ width: '70%' }}>
+                            {
+                                productDetail!=null && productDetail.productPictures != null ? productDetail.productPictures.map((pic, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <img style={{ width: '4rem', height: '4rem' }} src={generateImageUrl(pic.img)} />
+                                        </div>
+                                    )
+                                }) : null
+
+                            }
+
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
+        )
     }
 
     const handleShow = () => setShow(true)
@@ -117,6 +190,7 @@ const Products = (props) => {
                     </Col>
                 </Row>
                 {renderProduct()}
+                {renderProductDetailModal()}
                 <Modal show={show} onHide={handleCloseCancel}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add new Product</Modal.Title>

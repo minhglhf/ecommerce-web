@@ -42,7 +42,7 @@ exports.createProduct = (req, res) => {
 exports.fetchProducts = async (req, res) => {
     const products = await 
     Product.find()
-    .select("_id name productPicture price quantity description slug category")
+    .select("_id name productPictures price quantity description slug category")
     .populate('category')
     .exec(); //select("_ic name category")
 
