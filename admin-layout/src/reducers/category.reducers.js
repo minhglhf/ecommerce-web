@@ -38,16 +38,16 @@ const makeNewCategories = (category, oldCategories) => {
 }
 
 const categoryReducer = (state = initState, action) => {
-    console.log(state.categoryList)
+    // console.log(state.categoryList)
     switch (action.type) {
-        case categoryConsts.FETCH_REQUEST: {
+        case categoryConsts.FETCH_CATEGORIES_REQUEST: {
             state = {
                 ...state,
                 pending: true
             }
             break;
         }
-        case categoryConsts.FETCH_SUCCESS: {
+        case categoryConsts.FETCH_CATEGORIES_SUCCESS: {
             state = {
                 ...state,
                 categoryList: action.payload.categories,
@@ -56,7 +56,7 @@ const categoryReducer = (state = initState, action) => {
             }
             break;
         }
-        case categoryConsts.FETCH_FAILURE: {
+        case categoryConsts.FETCH_CATEGORIES_FAILURE: {
             state = {
                 ...state,
                 pending: false,
@@ -74,7 +74,7 @@ const categoryReducer = (state = initState, action) => {
         }
         case categoryConsts.ADD_CATEGORY_SUCCESS: {
             const newCategories = makeNewCategories(action.payload.newCategory, state.categoryList)
-            console.log(newCategories)
+            // console.log(newCategories)
             state = {
                 ...state,
                 pending: false,

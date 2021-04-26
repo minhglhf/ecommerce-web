@@ -1,24 +1,25 @@
-import { productConsts } from "../actions/const"
+import { categoryConsts } from "../actions/const"
 
 const initState = {
     products: null,
+    categories: null,
     pending: false,
     created: false,
     message: ''
 }
 
 
-const productReducer = (state = initState, action) => {
+const dataReducer = (state = initState, action) => {
     // console.log(state.categoryList)
     switch (action.type) {
-        case productConsts.FETCH_PRODUCTS_REQUEST: {
+        case categoryConsts.FETCH_REQUEST: {
             state = {
                 ...state,
                 pending: true
             }
             break;
         }
-        case productConsts.FETCH_PRODUCTS_SUCCESS: {
+        case categoryConsts.FETCH_SUCCESS: {
             state = {
                 ...state,
                 products: action.payload.products,
@@ -27,7 +28,7 @@ const productReducer = (state = initState, action) => {
             }
             break;
         }
-        case productConsts.FETCH_PRODUCTS_FAILURE: {
+        case categoryConsts.FETCH_FAILURE: {
             state = {
                 ...state,
                 pending: false,

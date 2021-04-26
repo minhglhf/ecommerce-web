@@ -5,12 +5,12 @@ export const fetchCategories = () => {
     return async dispatch => {
         const res = await axios.get('/category');
         dispatch({
-            type: categoryConsts.FETCH_REQUEST,
+            type: categoryConsts.FETCH_CATEGORIES_REQUEST,
         })
         if (res.status === 200) {
             const { categoryList } = res.data
             dispatch({
-                type: categoryConsts.FETCH_SUCCESS,
+                type: categoryConsts.FETCH_CATEGORIES_SUCCESS,
                 payload: {
                     categories: categoryList
                 }
@@ -18,7 +18,7 @@ export const fetchCategories = () => {
         }
         else {
             dispatch({
-                type: categoryConsts.FETCH_FAILURE,
+                type: categoryConsts.FETCH_CATEGORIES_FAILURE,
                 payload: {
                     error: res.data.error
                 }
