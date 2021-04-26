@@ -1,7 +1,7 @@
 
 const Product = require('../models/product')
-
 const slugify = require('slugify')
+
 exports.createProduct = (req, res) => {
     const { name, price,quantity, description, category, createdBy } = req.body;
     let productPictures = [];
@@ -37,3 +37,16 @@ exports.createProduct = (req, res) => {
         }
     })
 };
+
+
+exports.fetchProducts = async (req, res) => {
+    const products = await 
+    Product.find()
+    .select("_id name productPicture price quantity description slug category")
+    .populate('category')
+    .exec(); //select("_ic name category")
+
+    res.status(200).json({
+        products
+    })
+}

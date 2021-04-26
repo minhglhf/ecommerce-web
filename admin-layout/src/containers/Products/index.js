@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Layout from '../../components/layout';
-import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal, Table } from 'react-bootstrap';
 import Input from '../../components/UI/input';
 import { useDispatch, useSelector } from 'react-redux'
-import { addProduct } from '../../actions';
+import { addProduct, fetchProducts } from '../../actions';
 const Products = (props) => {
     const [productInput, setProductInput] = useState({
         name: '',
@@ -27,10 +27,15 @@ const Products = (props) => {
 
     }
     // console.log(productInput.productPictures)
-    const  dispatch = useDispatch();
+    const dispatch = useDispatch();
+    useEffect(() => {
 
+        dispatch(fetchProducts());
+
+    }, [])
     const [show, setShow] = useState(false);
     const categoryList = useSelector(state => state.category)
+    const productList = useSelector(state => state.product)
     const handleCloseCancel = () => {
         setShow(false);
     };
@@ -41,7 +46,7 @@ const Products = (props) => {
         form.append('quantity', productInput.quantity)
         form.append('price', productInput.price)
         form.append('description', productInput.description)
-        for(let pic of productInput.productPictures){
+        for (let pic of productInput.productPictures) {
             form.append('productPicture', pic)
         }
         // productInput.productPictures.map(file => ))
@@ -49,6 +54,43 @@ const Products = (props) => {
         // console.log(form)
         setShow(false);
     };
+
+    const renderProduct = () => {
+        return (
+            <div>
+                <Table responsive="sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {productList.products != null ? productList.products.map((product, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{product.name}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.quantity}</td>
+                                    <td>{product.description}</td>
+                                    <td>oh no</td>
+                                    <td>{product.category.name}</td>
+                                </tr>
+                            )
+                        }) : null}
+                    </tbody>
+                </Table>
+            </div>
+        )
+
+    }
+
     const handleShow = () => setShow(true)
     // console.log(productInput.productPictures)
     const createCategoryList = (categories, options = []) => {
@@ -74,6 +116,7 @@ const Products = (props) => {
 
                     </Col>
                 </Row>
+                {renderProduct()}
                 <Modal show={show} onHide={handleCloseCancel}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add new Product</Modal.Title>
@@ -117,7 +160,7 @@ const Products = (props) => {
                         </Input>
                         <select className='form-control'
                             value={productInput.category}
-                            onChange={(e) => setProductInput({  ...productInput, category: e.target.value,})}>
+                            onChange={(e) => setProductInput({ ...productInput, category: e.target.value, })}>
                             <option>select category</option>
                             {createCategoryList(categoryList.categoryList).map(option =>
                                 <option key={option.key} value={option.key}>{option.name}</option>
