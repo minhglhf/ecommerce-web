@@ -11,14 +11,14 @@ const initState = {
 const productReducer = (state = initState, action) => {
     // console.log(state.categoryList)
     switch (action.type) {
-        case productConsts.FETCH_PRODUCTS_REQUEST: {
+        case productConsts.FETCH_PRODUCTS_BY_SLUG_REQUEST: {
             state = {
                 ...state,
                 pending: true
             }
             break;
         }
-        case productConsts.FETCH_PRODUCTS_SUCCESS: {
+        case productConsts.FETCH_PRODUCTS_BY_SLUG_SUCCESS: {
             state = {
                 ...state,
                 products: action.payload.products,
@@ -27,7 +27,7 @@ const productReducer = (state = initState, action) => {
             }
             break;
         }
-        case productConsts.FETCH_PRODUCTS_FAILURE: {
+        case productConsts.FETCH_PRODUCTS_BY_SLUG_FAILURE: {
             state = {
                 ...state,
                 pending: false,

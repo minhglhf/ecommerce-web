@@ -1,19 +1,12 @@
 import React from 'react'
-import Header from '../../components/Header'
-import MenuHeader from '../../components/MenuHeader'
+import Layout from "../../components/Layout";
 /**
 * @author
 * @function Homepage
 **/
 
 const Homepage = (props) => {
-  return (
-    <>
-      <Header />
-      <MenuHeader />
-    </>
-
-  )
+  return <Layout></Layout>;
 
 }
 

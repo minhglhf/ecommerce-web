@@ -1,7 +1,7 @@
 const express = require('express');
 
 const router = express.Router();
-const { createProduct, fetchProducts } = require('../controller/product');
+const { createProduct, fetchProducts, fetchProductsBySlug } = require('../controller/product');
 const { requireSignin, adminMiddleware } = require('../middlewares');
 const multer = require('multer');
 const path = require('path');
@@ -21,5 +21,6 @@ const upload = multer({ storage })
 
 router.post('/product/create', requireSignin, adminMiddleware, upload.array('productPicture'), createProduct);
 router.get('/products', fetchProducts);
+router.get('/products/:slug', fetchProductsBySlug)
 
 module.exports = (router);

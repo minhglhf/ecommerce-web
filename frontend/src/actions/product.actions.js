@@ -34,3 +34,29 @@ export const fetchProducts = () => {
         }
     }
 }
+
+export const fetchProductsBySlug = (slug) => {
+    return async dispatch => {
+        const res = await axios.get(`/products/${slug}`);
+        dispatch({
+            type: productConsts.FETCH_PRODUCTS_BY_SLUG_REQUEST,
+        })
+        if (res.status === 200) {
+            const { products } = res.data
+            dispatch({
+                type: productConsts.FETCH_PRODUCTS_BY_SLUG_SUCCESS,
+                payload: {
+                    products
+                }
+            })
+        }
+        else {
+            dispatch({
+                type: productConsts.FETCH_PRODUCTS_BY_SLUG_FAILURE,
+                payload: {
+                    error: res.data.error
+                }
+            })
+        }
+    }
+}
